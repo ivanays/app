@@ -1,0 +1,19 @@
+apiVersion: kubeflow.org/v1
+kind: TFJob
+metadata:
+  name: mnist
+spec:
+  tfReplicaSpecs:
+    Worker:
+      replicas: 1
+      restartPolicy: OnFailure
+      template:
+        spec:
+          containers:
+          - name: tensorflow
+            image: ivanays/mnist-tfjob:v1
+            command: ["python", "/app/mnist_model.py"]
+            resources:
+              limits:
+                memory: "2Gi"
+                cpu: "1"
